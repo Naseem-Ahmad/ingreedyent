@@ -46,3 +46,16 @@ header > h1 {
     font-weight: 400;
     margin: 0;
 }
+
+.image-container {
+  height: calc(100vh - 60px); /* full height minus header */
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* center vertically */
+  padding-top: 20px;       /* optional extra spacing below header */
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
