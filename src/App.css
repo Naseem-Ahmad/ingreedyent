@@ -59,3 +59,116 @@ header > h1 {
   max-width: 100%;
   height: auto;
 }
+
+
+/*Copied CSS . Will update soon after functionality complete*/
+/* Reduce vertical margins and paddings */
+
+/* Wider containers, equal width */
+.ingredients-section,
+.recipe-section {
+  max-width: 600px;
+  margin: 1rem auto; /* reduced from 1.5rem / 2rem */
+  background: white;
+  border-radius: 10px;
+  padding: 1rem 1.5rem; /* tighter padding */
+  box-shadow: 0 6px 20px rgba(100, 108, 255, 0.12);
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+}
+
+/* Recipe section extra spacing reduced */
+.recipe-section {
+  margin-top: 1rem; /* less space on top */
+  line-height: 1.4; /* tighter line height */
+  font-size: 1.15rem;
+  white-space: pre-wrap;
+}
+
+/* Form styling */
+.add-ingredient-form {
+  max-width: 600px;
+  margin: 1.5rem auto; /* reduce from 2rem */
+  display: flex;
+  gap: 0.5rem; /* reduce horizontal gap */
+  background: white;
+  padding: 0.75rem 1rem; /* tighter padding */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.15);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Input */
+.add-ingredient-form input[type="text"] {
+  flex-grow: 1;
+  padding: 0.5rem 0.75rem; /* smaller input padding */
+  font-size: 1.1rem;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  transition: border-color 0.25s ease;
+}
+
+.add-ingredient-form input[type="text"]:focus {
+  border-color: #54b5a6;
+  outline: none;
+  box-shadow: 0 0 8px #54b5a6cc;
+}
+
+/* Button */
+.add-ingredient-form button {
+  background: #54b5a6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1.2rem; /* reduced horizontal padding */
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px #54b5a6cc;
+  font-family: 'Inter', sans-serif;
+}
+
+.add-ingredient-form button:hover {
+  background: #3d8f82;
+  box-shadow: 0 6px 18px #3d8f82cc;
+}
+
+/* Ingredients Section header and list */
+.ingredients-section h2 {
+  font-weight: 700;
+  margin-bottom: 0.4rem; /* less space */
+}
+
+.ingredients-section ul {
+  list-style-type: disc;
+  padding-left: 1.2rem;
+  font-size: 1.1rem;
+  color: #334155;
+  margin-top: 0;
+}
+
+.ingredients-section ul li {
+  padding: 0.1rem 0; /* tighter vertical padding */
+}
+
+/* Responsive */
+@media (max-width: 660px) {
+  .add-ingredient-form,
+  .ingredients-section,
+  .recipe-section {
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .add-ingredient-form {
+    flex-direction: column;
+  }
+
+  .add-ingredient-form button {
+    width: 100%;
+    padding: 0.7rem 0;
+    font-size: 1.2rem;
+  }
+}

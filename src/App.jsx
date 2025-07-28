@@ -1,15 +1,14 @@
 
 import Header from './Header.jsx'
 import siteMLogo from '/SiteM.png'
-
+import MainContent from './MainContent.jsx'
 
 function App() {
   return (
     <>
     <Header />
-          <div className="image-container">
-        <img className="maincontent" src={siteMLogo} alt=" logo" height={600} width={600} />
-             </div>
+    <MainContent/> 
+    
     </>
   )
 }
