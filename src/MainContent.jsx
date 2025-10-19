@@ -2,15 +2,25 @@ import { useState,useRef } from "react"
 import IngredientList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
 import { getRecipeFromChefClaude, getRecipeFromMistral } from "./Ai"
+import { getSecretKey } from "./Ai";
 
 export default function MainContent(){
+
+    const secretKey =  getSecretKey();
+  if (!secretKey) {
+    console.error("No secret key available!");
+    return;
+  }
+
+  console.log(secretKey);
+
     const [ingredients,setIngredients]=useState([]);
  
     const [recipe, setRecipe] = useState("")
      const inputRef = useRef(null);
        async function getRecipe() {
        // setRecipeShown(prevShown => !prevShown)
-        const recipeMarkdown = await getRecipeFromMistral(ingredients)
+        const recipeMarkdown = await getRecipeFromChefClaude(ingredients,secretKey)
         setRecipe(recipeMarkdown)
     } 
 

@@ -1,6 +1,20 @@
 import Anthropic from "@anthropic-ai/sdk"
 import { HfInference } from '@huggingface/inference'
 
+// fetchSecretKey.js
+export async function getSecretKey() {
+  try {
+    const res = await fetch("https://ingreedyentbackend.onrender.com/api/key"); // or your live backend URL
+    const data = await res.json();
+    // backend returns { message: "...", key: "your_key_here" }
+    return data.key; 
+  } catch (err) {
+    console.error("Error fetching secret key:", err);
+    return null;
+  }
+}
+
+
 const SYSTEM_PROMPT = `
 You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page
 `
@@ -16,15 +30,19 @@ You are an assistant that receives a list of ingredients that a user has and sug
 // your API calls can be made. Doing so will keep your
 // API keys private.
 
-const anthropic = new Anthropic({
+//const anthropic = new Anthropic({
     // Make sure you set an environment variable in Scrimba 
     // for ANTHROPIC_API_KEY
     //apiKey: process.env.ANTHROPIC_API_KEY,
+    //apiKey: ,
+  //  dangerouslyAllowBrowser: true,
+//})
 
+export async function getRecipeFromChefClaude(ingredientsArr,apikeynew) {
+    const anthropic = new Anthropic({
+    apiKey: apikeynew,
     dangerouslyAllowBrowser: true,
 })
-
-export async function getRecipeFromChefClaude(ingredientsArr) {
     const ingredientsString = ingredientsArr.join(", ")
 
     const msg = await anthropic.messages.create({
@@ -42,7 +60,7 @@ export async function getRecipeFromChefClaude(ingredientsArr) {
 // for HF_ACCESS_TOKEN
 //const hf = new HfInference(process.env.HF_ACCESS_TOKEN)
 // const hf = new HfInference(import.meta.env.VITE_HF_ACCESS_TOKEN) 
-const hf = new HfInference(process.env.VITE_HF_ACCESS_TOKEN)
+//const hf = new HfInference(process.env.VITE_HF_ACCESS_TOKEN)
 
 export async function getRecipeFromMistral(ingredientsArr) {
     const ingredientsString = ingredientsArr.join(", ")
