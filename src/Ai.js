@@ -62,6 +62,11 @@ export async function getRecipeFromChefClaude(ingredientsArr,apikeynew) {
 // const hf = new HfInference(import.meta.env.VITE_HF_ACCESS_TOKEN) 
 //const hf = new HfInference(process.env.VITE_HF_ACCESS_TOKEN)
 
+    const hf = new Anthropic({
+    apiKey: apikeynew,
+    dangerouslyAllowBrowser: true,
+})
+
 export async function getRecipeFromMistral(ingredientsArr) {
     const ingredientsString = ingredientsArr.join(", ")
     try {

@@ -20,7 +20,7 @@ export default function MainContent(){
      const inputRef = useRef(null);
        async function getRecipe() {
        // setRecipeShown(prevShown => !prevShown)
-        const recipeMarkdown = await getRecipeFromChefClaude(ingredients,secretKey)
+        const recipeMarkdown = await getRecipeFromMistral(ingredients,secretKey)
         setRecipe(recipeMarkdown)
     } 
 
