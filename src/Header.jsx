@@ -1,23 +1,13 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
+import chefLogo from './assets/chefLogo.png'
 import './App.css'
 
 export default function Header(){
     return (
-      <>
-          <header>
-          <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
-          <h1>Ingreedyent Pro</h1> 
-         
+  <>
+    <header>
+      <img src={chefLogo} className="chef Logo " alt="chef Logo" />
+      <h1>Ingreedyent Pro</h1>    
     </header>
-
-      </>
-
+  </>
     )
 }

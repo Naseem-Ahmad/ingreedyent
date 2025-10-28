@@ -1,50 +1,74 @@
-import { useState,useRef } from "react"
+import { useState, useRef } from "react";
 import IngredientList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
-import { getRecipeFromChefClaude, getRecipeFromMistral } from "./Ai"
-import { getSecretKey } from "./Ai";
 
-export default function MainContent(){
+export default function MainContent() {
+  // ✅ Set your actual deployed backend URL
+  const API_BASE = "https://ingreedyent-backend.vercel.app";
 
-    const secretKey =  getSecretKey();
-  if (!secretKey) {
-    console.error("No secret key available!");
-    return;
+  // ✅ State for ingredients + recipe
+  const [ingredients, setIngredients] = useState([]);
+  const [recipe, setRecipe] = useState("");
+
+  const inputRef = useRef(null);
+
+  // ✅ Fetch recipe from your backend (Hugging Face → Mistral)
+  async function getRecipeFromMistral(ingredients) {
+    try {
+      const res = await fetch(`${API_BASE}/api/mistral`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ingredients }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
+      }
+
+      const data = await res.json();
+      return data.recipe;
+    } catch (error) {
+      console.error("Error fetching recipe:", error);
+      return "Sorry, there was a problem getting your recipe.";
+    }
   }
 
-  console.log(secretKey);
+  // ✅ Called when user clicks “Get Recipe” button
+  async function getRecipe() {
+    if (ingredients.length === 0) return;
+    const recipeMarkdown = await getRecipeFromMistral(ingredients);
+    setRecipe(recipeMarkdown);
+  }
 
-    const [ingredients,setIngredients]=useState([]);
- 
-    const [recipe, setRecipe] = useState("")
-     const inputRef = useRef(null);
-       async function getRecipe() {
-       // setRecipeShown(prevShown => !prevShown)
-        const recipeMarkdown = await getRecipeFromMistral(ingredients,secretKey)
-        setRecipe(recipeMarkdown)
-    } 
+  // ✅ Handle adding ingredients
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newIngredient = formData.get("ingredient");
 
-    function handleSumbit(event){
-        event.preventDefault();
-  //  if (newIngredient.trim() === "") return; // prevent empty ingredient
-        const formData= new FormData(event.currentTarget);
-        const newIngredient = formData.get("ingredient");
-         if (!newIngredient.trim()) return; // prevent empty input
-        setIngredients(preIngredients =>[...preIngredients,newIngredient]);
-       
-         inputRef.current.value = '';
-       /* ingredients.push(newIngredient)*/
-       // console.log(ingredients)
-    }
-     
-    return(
-        <>
-            <form onSubmit={handleSumbit} className="add-ingredient-form">
-            <input type="text" ref={inputRef} placeholder="e.g Carrot" name="ingredient"/>
-            <button >+ Add Ingredient</button>
-            </form>
-             { ingredients.length > 0  && <IngredientList ingredients={ingredients} getRecipe={getRecipe}/> }    
-             { recipe &&  <ClaudeRecipe recipe={recipe}/>}
-        </>
-    )
+    if (!newIngredient.trim()) return; // prevent empty input
+
+    setIngredients((prev) => [...prev, newIngredient.trim()]);
+    inputRef.current.value = ""; // clear input
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit} className="add-ingredient-form">
+        <input
+          type="text"
+          ref={inputRef}
+          placeholder="e.g. Carrot"
+          name="ingredient"
+        />
+        <button type="submit">+ Add Ingredient</button>
+      </form>
+
+      {ingredients.length > 0 && (
+        <IngredientList ingredients={ingredients} getRecipe={getRecipe} />
+      )}
+
+      {recipe && <ClaudeRecipe recipe={recipe} />}
+    </>
+  );
 }
