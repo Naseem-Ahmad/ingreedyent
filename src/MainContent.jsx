@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import IngredientList from "./IngredientsList";
-import ClaudeRecipe from "./ClaudeRecipe";
+import Recipe from "./Recipe";
 
 export default function MainContent() {
   // deployed backend URL
-  const API_BASE = "https://ingreedyents-api.vercel.app/";
+  const API_BASE = "https://ingreedyents-api.vercel.app";
 
   // ingredients + recipe
   const [ingredients, setIngredients] = useState([]);
@@ -32,27 +32,6 @@ export default function MainContent() {
     }
   }
 
-
-  // Fetch recipe from your backend (Hugging Face → Mistral)
-  async function getRecipeFromMistral(ingredients) {
-    try {
-      const res = await fetch(`${API_BASE}/api/recipe`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ingredients }),
-      });
-
-      if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
-      }
-
-      const data = await res.json();
-      return data.recipe;
-    } catch (error) {
-      console.error("Error fetching recipe:", error);
-      return "Sorry, there was a problem getting your recipe.";
-    }
-  }
 
   // Called when user clicks “Get Recipe” button
   async function getRecipe() {
@@ -89,7 +68,7 @@ export default function MainContent() {
         <IngredientList ingredients={ingredients} getRecipe={getRecipe} />
       )}
 
-      {recipe && <ClaudeRecipe recipe={recipe} />}
+      {recipe && <Recipe recipe={recipe} />}
     </>
   );
 }
