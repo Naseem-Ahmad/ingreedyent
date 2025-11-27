@@ -4,13 +4,34 @@ import ClaudeRecipe from "./ClaudeRecipe";
 
 export default function MainContent() {
   // deployed backend URL
-  const API_BASE = "https://ingreedyent-backend.vercel.app";
+  const API_BASE = "https://ingreedyents-api.vercel.app/";
 
   // ingredients + recipe
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
 
   const inputRef = useRef(null);
+
+    async function getRecipeOpenAI(ingredients) {
+    try {
+      const res = await fetch("https://YOUR-VERCEL-URL.vercel.app/api/recipe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ingredients }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
+      }
+
+      const data = await res.json();
+      return data.recipe;
+    } catch (error) {
+      console.error("Error fetching recipe:", error);
+      return "Sorry, there was a problem getting your recipe.";
+    }
+  }
+
 
   // Fetch recipe from your backend (Hugging Face → Mistral)
   async function getRecipeFromMistral(ingredients) {
