@@ -9,6 +9,8 @@ export default function MainContent() {
   // ingredients + recipe
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
+  const [notification, setNotification] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const inputRef = useRef(null);
 
@@ -36,8 +38,15 @@ export default function MainContent() {
   // Called when user clicks “Get Recipe” button
   async function getRecipe() {
     if (ingredients.length === 0) return;
+    
+    setLoading(true);
+    setRecipe("");
+    try {
     const recipeMarkdown = await getRecipeOpenAI(ingredients);
     setRecipe(recipeMarkdown);
+     } finally {
+        setLoading(false);
+    }
   }
 
   // Handle adding ingredients
@@ -48,8 +57,16 @@ export default function MainContent() {
 
     if (!newIngredient.trim()) return; // prevent empty input
 
+    const existItem = newIngredient.trim().toLowerCase();
+
+    if (ingredients.map(i => i.toLowerCase()).includes(existItem)) {
+        setNotification(`${newIngredient} is already in the list`);
+        return;
+    }
+
     setIngredients((prev) => [...prev, newIngredient.trim()]);
     inputRef.current.value = ""; // clear input
+    setNotification(""); // clear if success
   }
 
   return (
@@ -64,11 +81,17 @@ export default function MainContent() {
         <button type="submit">+ Add Ingredient</button>
       </form>
 
+      {notification && (<div className="notification">{notification}</div>)}
+
       {ingredients.length > 0 && (
         <IngredientList ingredients={ingredients} getRecipe={getRecipe} />
       )}
 
-      {recipe && <Recipe recipe={recipe} />}
+      {loading ? (
+    <div className="loader-container">
+        <div className="loader"></div>
+        <p>Generating your recipe…</p>
+    </div>) : (recipe && <Recipe recipe={recipe} />)}
     </>
   );
 }

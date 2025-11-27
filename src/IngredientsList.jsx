@@ -1,6 +1,7 @@
 import  './css/Header.css'
 
 export default function IngredientList(props){
+        
         const ingredientListItem = props.ingredients.map(ingredient=>(
         <li key={ingredient}>{ingredient}</li>
         ))
