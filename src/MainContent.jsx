@@ -3,19 +3,19 @@ import IngredientList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
 
 export default function MainContent() {
-  // ✅ Set your actual deployed backend URL
+  // deployed backend URL
   const API_BASE = "https://ingreedyent-backend.vercel.app";
 
-  // ✅ State for ingredients + recipe
+  // ingredients + recipe
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
 
   const inputRef = useRef(null);
 
-  // ✅ Fetch recipe from your backend (Hugging Face → Mistral)
+  // Fetch recipe from your backend (Hugging Face → Mistral)
   async function getRecipeFromMistral(ingredients) {
     try {
-      const res = await fetch(`${API_BASE}/api/mistral`, {
+      const res = await fetch(`${API_BASE}/api/recipe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ingredients }),
@@ -33,14 +33,14 @@ export default function MainContent() {
     }
   }
 
-  // ✅ Called when user clicks “Get Recipe” button
+  // Called when user clicks “Get Recipe” button
   async function getRecipe() {
     if (ingredients.length === 0) return;
     const recipeMarkdown = await getRecipeFromMistral(ingredients);
     setRecipe(recipeMarkdown);
   }
 
-  // ✅ Handle adding ingredients
+  // Handle adding ingredients
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
