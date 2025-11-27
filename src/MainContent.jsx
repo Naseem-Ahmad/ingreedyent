@@ -14,7 +14,7 @@ export default function MainContent() {
 
     async function getRecipeOpenAI(ingredients) {
     try {
-      const res = await fetch("https://YOUR-VERCEL-URL.vercel.app/api/recipe", {
+      const res = await fetch("https://ingreedyents-api.vercel.app/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ingredients }),
@@ -57,7 +57,7 @@ export default function MainContent() {
   // Called when user clicks “Get Recipe” button
   async function getRecipe() {
     if (ingredients.length === 0) return;
-    const recipeMarkdown = await getRecipeFromMistral(ingredients);
+    const recipeMarkdown = await getRecipeOpenAI(ingredients);
     setRecipe(recipeMarkdown);
   }
 
