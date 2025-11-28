@@ -6,6 +6,9 @@
   pointer-events: none !important;
 }
 
+
+
+
 /*loader css*/
 .loader-container {
   max-width: 640px;
@@ -381,4 +384,60 @@ header h1 {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/*Suggestion box css*/
+.autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+}
+
+.autocomplete-wrapper input[type="text"] {
+  width: 100%;        /* FULL width of wrapper */
+  box-sizing: border-box;  /* includes padding/border in width */
+  min-width: 0;       /* allows proper shrinking */
+}
+
+.suggestion-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;      /* MATCH INPUT WIDTH */
+  right: auto;      /* FIXES YOUR PROBLEM */
+  margin-top: 0.4rem;
+  
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  list-style: none;
+  padding: 0;
+  overflow: hidden;
+  z-index: 30;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+}
+
+
+.suggestion-box li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.suggestion-box li:hover {
+  background: #f3faf6;
+}
+
+.suggest-loading {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.4rem;
+  background: #fff;
+  padding: 0.6rem 1rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #7ac9a3;
+  z-index: 25;
 }
