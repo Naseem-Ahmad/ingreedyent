@@ -2,8 +2,8 @@ import  './css/Header.css'
 
 export default function IngredientList(props){
         
-        const ingredientListItem = props.ingredients.map(ingredient=>(
-        <li key={ingredient}>{ingredient}</li>
+        const ingredientListItem = props.ingredients.map((ingredient,index)=>(
+        <li key={`${ingredient}-${index}`} title="">{ingredient}</li>
         ))
 
 return (

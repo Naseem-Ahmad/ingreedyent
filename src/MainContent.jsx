@@ -12,6 +12,10 @@ export default function MainContent() {
   const [notification, setNotification] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [loadingSuggest, setLoadingSuggest] = useState(false);
+
   const inputRef = useRef(null);
 
     async function getRecipeOpenAI(ingredients) {
